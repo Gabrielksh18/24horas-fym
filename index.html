@@ -1,0 +1,742 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>24 Horas de Física y Meteorología · 21.ª edición</title>
+<meta name="description" content="21.ª edición de las 24 Horas de Física y Meteorología. 10 y 11 de diciembre de 2026. AEFYM, Escuela de Física, Universidad de Costa Rica.">
+<meta property="og:title" content="24 Horas de Física y Meteorología · 21.ª edición">
+<meta property="og:description" content="10 y 11 de diciembre de 2026 · Escuela de Física, Universidad de Costa Rica. Organiza la AEFYM.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%231d74bd'/%3E%3Ccircle cx='16' cy='16' r='8' fill='none' stroke='%23fff' stroke-width='2.5'/%3E%3Ccircle cx='16' cy='16' r='2.5' fill='%23ffd166'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Public+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+/* 24 horas en el cielo: cada bloque de la página es una hora del evento
+   (jueves 13:00 → viernes 12:00) y el fondo sigue el color del cielo a esa hora. */
+@property --paper{syntax:"<color>";inherits:true;initial-value:#1d74bd}
+@property --ink{syntax:"<color>";inherits:true;initial-value:#ffffff}
+@property --ink-2{syntax:"<color>";inherits:true;initial-value:#d4e7f7}
+@property --rule{syntax:"<color>";inherits:true;initial-value:#4b93cf}
+@property --iso{syntax:"<color>";inherits:true;initial-value:#bfe6ff}
+@property --front{syntax:"<color>";inherits:true;initial-value:#ffd166}
+@property --chip{syntax:"<color>";inherits:true;initial-value:#2c84cc}
+:root{
+  --paper:#1d74bd; --ink:#ffffff; --ink-2:#d4e7f7; --rule:#4b93cf;
+  --iso:#bfe6ff; --front:#ffd166; --chip:#2c84cc;
+  --display:"Archivo", "Arial Narrow", system-ui, sans-serif;
+  --body:"Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  color-scheme:dark;
+  transition:--paper .8s ease,--ink .8s ease,--ink-2 .8s ease,--rule .8s ease,--iso .8s ease,--front .8s ease,--chip .8s ease;
+}
+@media (prefers-reduced-motion:reduce){:root{transition:none}}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{background:var(--paper);color:var(--ink);font:400 1.0625rem/1.65 var(--body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--front);outline-offset:3px}
+
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+section{padding-block:clamp(64px,9vw,112px);border-top:1px solid var(--rule)}
+.label{font:500 .75rem/1.3 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;font-weight:800;letter-spacing:-.01em}
+h2{font-size:clamp(2rem,4.6vw,3.4rem);line-height:1;font-stretch:75%;text-transform:uppercase;margin-top:14px}
+.intro{max-width:60ch;color:var(--ink-2);margin-top:18px}
+.sec-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:24px 56px;align-items:end;margin-bottom:48px}
+.sec-head .intro{margin-top:0}
+@media (max-width:820px){.sec-head{grid-template-columns:1fr}}
+
+/* Barra superior */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--paper);border-bottom:1px solid var(--rule)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--paper)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:60px}
+.mark{font:800 1rem/1 var(--display);font-stretch:85%;letter-spacing:.02em;text-decoration:none;display:flex;align-items:center;gap:10px;white-space:nowrap}
+.mark i{width:18px;height:18px;border:2px solid var(--ink);border-radius:50%;position:relative;flex:none}
+.mark i::after{content:"";position:absolute;inset:3px;border:1.5px solid var(--front);border-radius:50%}
+.top nav{display:flex;gap:20px}
+.top nav a{font:500 .78rem var(--mono);text-decoration:none;color:var(--ink-2);text-transform:uppercase;letter-spacing:.06em}
+.top nav a:hover{color:var(--ink)}
+.top-r{display:flex;align-items:center;gap:12px}
+.clock{display:flex;align-items:center;gap:8px;font:500 .74rem var(--mono);letter-spacing:.06em;text-transform:uppercase;font-variant-numeric:tabular-nums;white-space:nowrap}
+.clock .sun{width:20px;height:14px;position:relative;overflow:hidden;border-bottom:1.5px solid var(--ink)}
+.clock .sun i{position:absolute;left:3px;width:14px;height:14px;border-radius:50%;background:var(--front);transition:top .8s ease}
+.clock b{font-weight:500;color:var(--ink-2)}
+.menu-btn{display:none;background:none;border:1.5px solid var(--ink);color:var(--ink);font:600 .85rem var(--body);padding:7px 12px;cursor:pointer}
+@media (max-width:1060px){
+  .top nav{display:none;position:absolute;top:60px;left:0;right:0;flex-direction:column;gap:0;background:var(--paper);border-bottom:1px solid var(--rule);
+    padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+  .top nav.open{display:flex}
+  .top nav a{padding:14px 0;border-top:1px solid var(--rule);font-size:.85rem}
+  .menu-btn{display:inline-block}
+}
+@media (max-width:520px){.clock b,.top .btn.sm{display:none}}
+
+.btn{display:inline-flex;align-items:center;gap:10px;font:600 .95rem var(--body);text-decoration:none;padding:13px 22px;border:1.5px solid var(--ink);color:var(--ink);background:transparent;transition:background .15s,color .15s;cursor:pointer}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.solid{background:var(--ink);color:var(--paper)}
+.btn.solid:hover{background:var(--front);border-color:var(--front);color:#14202c}
+.btn.sm{padding:7px 13px;font-size:.85rem}
+
+/* Portada */
+.hero{position:relative;overflow:hidden;border-top:0;padding-block:clamp(40px,6vw,80px) 0}
+#isobaras{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.hero .wrap{position:relative;z-index:1}
+.hero h1{margin:18px 0 30px;text-transform:uppercase;line-height:.84}
+.hero h1 .big{display:block;font-size:clamp(5rem,19vw,15rem);font-weight:900;font-stretch:62%;letter-spacing:-.02em}
+.hero h1 .ed{display:flex;align-items:center;gap:.35em;font-size:clamp(2rem,5.4vw,4.4rem);font-stretch:70%;font-weight:800;margin-bottom:.12em}
+.hero h1 .ed b{font-weight:900;color:var(--front)}
+.hero h1 .ed::after{content:"";flex:1;max-width:5em;height:.09em;background:var(--front);margin-left:.1em}
+.hero h1 .sub{display:block;font-size:clamp(1.9rem,5.2vw,4.2rem);font-stretch:72%;color:var(--iso);margin-top:10px;line-height:.95}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,400px);gap:40px 64px;align-items:end}
+.hero p.lede{font-size:1.2rem;max-width:46ch}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+@media (max-width:900px){.hero-grid{grid-template-columns:1fr}}
+.station{background:var(--paper);border:1.5px solid var(--ink);font-family:var(--mono);font-size:.86rem}
+.station .hd{display:flex;justify-content:space-between;gap:10px;padding:10px 14px;background:var(--ink);color:var(--paper);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase}
+.station dl{display:grid;grid-template-columns:auto 1fr}
+.station dt,.station dd{padding:10px 14px;border-top:1px solid var(--rule)}
+.station dt{color:var(--ink-2);text-transform:uppercase;font-size:.72rem;letter-spacing:.06em;padding-top:12px}
+.station dd{text-align:right;font-variant-numeric:tabular-nums}
+.station dl > :nth-child(-n+2){border-top:0}
+#countdown{color:var(--front)}
+.front{height:22px;margin-top:clamp(48px,7vw,80px);background:linear-gradient(var(--ink),var(--ink)) 0 100%/100% 2px no-repeat;position:relative;z-index:1}
+.front svg{display:block;width:100%;height:22px}
+
+/* Sobre */
+.about{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:40px 72px}
+.about .intro + .intro{margin-top:16px}
+.pull{font:700 clamp(1.5rem,2.6vw,2rem)/1.15 var(--display);font-stretch:80%;border-left:3px solid var(--front);padding-left:22px;align-self:start}
+.pull span{display:block;margin-top:16px;font:400 .8rem var(--mono);color:var(--ink-2);letter-spacing:.04em}
+@media (max-width:820px){.about{grid-template-columns:1fr}}
+
+/* Galería de la edición anterior */
+.gal{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:clamp(150px,17vw,230px);gap:10px}
+.gal figure{position:relative;overflow:hidden;background:var(--chip);margin:0}
+.gal img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease}
+.gal figure:hover img{transform:scale(1.03)}
+.gal figcaption{position:absolute;left:10px;bottom:10px;background:var(--paper);color:var(--ink);font:500 .7rem var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:5px 8px}
+.gal .g1{grid-row:span 2}
+.gal .g2{grid-column:span 2}
+.gal .g3{grid-row:span 2}
+.gal .g6{grid-column:span 2}
+.gal .gtext{grid-column:span 2;display:flex;flex-direction:column;justify-content:flex-end;gap:8px;border-top:1.5px solid var(--ink);padding-top:16px}
+.gal .gtext strong{font:800 clamp(1.5rem,2.6vw,2.1rem)/1.05 var(--display);font-stretch:78%;text-transform:uppercase}
+.gal .gtext p{color:var(--ink-2);font-size:.95rem;max-width:44ch}
+@media (max-width:760px){
+  .gal{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:170px;grid-auto-flow:dense}
+  .gal .g3{grid-row:span 1}
+  .gal .g5{grid-column:span 2}
+  .gal .gtext{grid-column:1/-1;order:-1;padding-bottom:8px}
+}
+@media (prefers-reduced-motion:reduce){.gal img{transition:none}}
+
+/* Temáticas: cada eje es una pestaña */
+.legend .th{background:none;border:0;font:inherit;color:inherit;text-align:left;cursor:pointer;width:100%}
+.legend{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1.5px solid var(--ink)}
+.legend .th{display:block;text-decoration:none;padding:26px 24px 8px 0;border-right:1px solid var(--rule)}
+.legend .th+a{padding-left:24px}
+.legend .th:last-child{border-right:0}
+.legend svg{display:block;height:28px;width:100%;max-width:120px;margin-bottom:20px}
+.legend h3{font-size:1.75rem;font-stretch:80%;text-transform:uppercase;line-height:1}
+.legend .k{font:500 .78rem var(--mono);color:var(--front);margin:10px 0 8px;text-transform:uppercase;letter-spacing:.05em}
+.legend p{color:var(--ink-2);font-size:.98rem}
+.legend .go{display:inline-block;margin-top:12px;font:500 .78rem var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--ink)}
+.legend .th:hover h3{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
+@media (max-width:900px){
+  .legend{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .legend .th{padding:26px 20px 26px 0;border-bottom:1px solid var(--rule)}
+  .legend .th+a{padding-left:0}
+  .legend .th:nth-child(even){padding-left:20px;border-right:0}
+}
+@media (max-width:520px){.legend{grid-template-columns:1fr}.legend .th,.legend .th:nth-child(even){padding-left:0;border-right:0}}
+
+.legend .th{opacity:.6;transition:opacity .2s;box-shadow:inset 0 4px 0 transparent}
+.legend .th:hover{opacity:1}
+.legend .th[aria-selected="true"]{opacity:1;box-shadow:inset 0 4px 0 var(--front)}
+.tpanel{margin-top:44px}
+.tpanel[hidden]{display:none}
+.tlead{font:700 1.5rem/1.2 var(--display);font-stretch:80%;max-width:40ch;margin-bottom:24px}
+.centers{list-style:none;border-top:1.5px solid var(--ink)}
+.centers li{display:grid;grid-template-columns:8rem minmax(0,1fr);gap:16px;padding:18px 0;border-bottom:1px solid var(--rule)}
+.centers li div{display:flex;flex-direction:column;gap:6px}
+/* Áreas */
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+.filters button{font:500 .8rem var(--mono);text-transform:uppercase;letter-spacing:.06em;padding:8px 14px;border:1.5px solid var(--rule);background:transparent;color:var(--ink-2);cursor:pointer}
+.filters button[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:var(--paper)}
+.areas{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 36px;border-top:1.5px solid var(--ink)}
+.area{padding:20px 0 22px;border-bottom:1px solid var(--rule);display:flex;flex-direction:column;gap:6px}
+.area h3{font-size:1.3rem;font-stretch:82%;text-transform:uppercase;line-height:1.05}
+.area p{color:var(--ink-2);font-size:.95rem}
+.area .tag{font:500 .72rem var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--front)}
+@media (max-width:900px){.areas{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.areas{grid-template-columns:1fr}}
+
+.centers .sig{font:800 1.4rem/1.1 var(--display);font-stretch:80%}
+.centers p{color:var(--ink-2);font-size:.95rem}
+.centers strong{color:var(--ink);font-weight:600}
+@media (max-width:520px){.centers li{grid-template-columns:1fr;gap:4px}}
+
+/* Comunidad */
+.clubs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0 36px}
+.clubs div{padding:22px 0 26px;border-top:1.5px solid var(--ink)}
+.clubs h3{font-size:1.35rem;font-stretch:80%;text-transform:uppercase;margin-bottom:6px;line-height:1.05}
+.clubs p{color:var(--ink-2);font-size:.96rem}
+@media (max-width:900px){.clubs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.clubs{grid-template-columns:1fr}}
+
+/* Importancia */
+.tabs{display:flex;flex-wrap:wrap;border-bottom:1.5px solid var(--ink);margin-bottom:40px}
+.tab{background:none;border:0;border-bottom:3px solid transparent;margin-bottom:-1.5px;padding:12px 18px 12px 0;margin-right:22px;font:600 1rem var(--body);color:var(--ink-2);cursor:pointer}
+.tab[aria-selected="true"]{color:var(--ink);border-color:var(--front)}
+.tab:hover{color:var(--ink)}
+.panel{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2.2fr);gap:32px 64px}
+.panel[hidden]{display:none}
+.panel .lead{font:700 1.6rem/1.15 var(--display);font-stretch:80%}
+.panel .note{margin-top:24px;font-size:.95rem;color:var(--ink-2);border-top:1px solid var(--rule);padding-top:16px}
+.panel .note b{color:var(--front);font:500 .75rem var(--mono);text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px}
+.uses{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 40px}
+.uses div{padding:18px 0;border-top:1px solid var(--rule)}
+.uses h4{font:600 1.05rem var(--body);margin-bottom:4px}
+.uses p{color:var(--ink-2);font-size:.96rem}
+@media (max-width:820px){.panel{grid-template-columns:1fr}}
+@media (max-width:560px){.uses{grid-template-columns:1fr}}
+
+/* Programa */
+.days{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px 56px}
+.day h3{font-size:clamp(1.8rem,3.4vw,2.6rem);font-stretch:72%;text-transform:uppercase;line-height:1;display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.day h3 span{font:500 .8rem var(--mono);letter-spacing:.06em;color:var(--ink-2)}
+.day ol{list-style:none;border-top:1.5px solid var(--ink);margin-top:18px}
+.day li{display:grid;grid-template-columns:6.5rem minmax(0,1fr);gap:14px;padding:13px 0;border-bottom:1px solid var(--rule);align-items:baseline}
+.day time{font:500 .88rem var(--mono);font-variant-numeric:tabular-nums}
+.day li.tbd{color:var(--ink-2)}
+.day li.tbd time{color:var(--ink-2)}
+.day li em{font-style:normal;font:500 .72rem var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--ink-2);margin-left:8px}
+.prog-note{margin-top:32px;display:flex;flex-wrap:wrap;gap:16px 32px;align-items:center;justify-content:space-between;border:1.5px solid var(--ink);padding:20px 22px}
+.prog-note p{max-width:62ch}
+@media (max-width:820px){.days{grid-template-columns:1fr}}
+
+/* Empresas */
+.biz{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 48px;border-top:1.5px solid var(--ink)}
+.biz div{padding:22px 0;border-bottom:1px solid var(--rule)}
+.biz h3{font-size:1.4rem;font-stretch:80%;text-transform:uppercase;margin-bottom:4px}
+.biz p{color:var(--ink-2);font-size:.96rem}
+.biz-cta{margin-top:32px;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+@media (max-width:640px){.biz{grid-template-columns:1fr}}
+
+/* Organizan */
+.orgs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1.5px solid var(--ink)}
+.org{display:flex;align-items:center;gap:18px;padding:24px 20px 24px 0;border-right:1px solid var(--rule)}
+.org+.org{padding-left:20px}
+.org:last-child{border-right:0}
+.logo{width:136px;height:88px;flex:none;background:#fff;border:1px solid var(--rule);display:grid;place-items:center;padding:10px}
+.logo img{max-height:100%;object-fit:contain}
+.logo .ph{font:800 .8rem/1 var(--display);color:#0f1d2b;text-align:center}
+.org span{font-size:.95rem}
+@media (max-width:760px){.orgs{grid-template-columns:1fr}.org,.org+.org{padding-left:0;border-right:0;border-bottom:1px solid var(--rule)}}
+
+/* Contacto */
+.contact{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:40px 72px;align-items:start}
+.lines{border-top:1.5px solid var(--ink)}
+.line{display:grid;grid-template-columns:9rem minmax(0,1fr) auto;gap:16px;align-items:center;padding:20px 0;border-bottom:1px solid var(--rule)}
+.line .v{font:600 clamp(1.05rem,2vw,1.35rem) var(--body);word-break:break-word}
+.line .v a{text-decoration:none}
+.line .v a:hover{text-decoration:underline}
+.copy{font:500 .72rem var(--mono);text-transform:uppercase;letter-spacing:.06em;background:var(--chip);color:var(--ink);border:0;padding:7px 10px;cursor:pointer}
+.copy:hover{background:var(--ink);color:var(--paper)}
+@media (max-width:560px){.line{grid-template-columns:1fr auto}.line .label{grid-column:1/-1}}
+.qr{border:1.5px solid var(--ink);padding:22px;display:grid;gap:14px;justify-items:start}
+#qr{background:#fff;padding:12px}
+#qr img,#qr canvas{display:block;width:168px!important;height:168px!important}
+.qr strong{font:800 1.3rem/1 var(--display);font-stretch:80%;text-transform:uppercase}
+.qr p{color:var(--ink-2);font-size:.92rem}
+@media (max-width:820px){.contact{grid-template-columns:1fr}}
+
+footer{border-top:1.5px solid var(--ink);padding-block:28px}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 24px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<!-- =========================================================
+     EDITE ESTOS DATOS. Todo lo demás se actualiza solo.
+     ========================================================= -->
+<script>
+const EVENTO = {
+  edicion: "21.ª edición",
+  inicioISO: "2026-12-10T13:00:00-06:00",   // jueves 10 dic, 1:00 p.m. (hora de Costa Rica)
+  finISO:    "2026-12-11T13:00:00-06:00",
+  fechaTexto: "10 y 11 dic 2026",
+  lugar: "Auditorio de Física-Matemática",
+  entrada: "Gratuita",
+  correo: "JD.AEFYM@ucr.ac.cr",
+  telefono: "+506 7094 9902",                // Presidencia AEFYM ("" para ocultarlo)
+  instagram: "aefisymet",                    // usuario de IG sin @
+  formulario: "https://forms.gle/8rWJ1Vfpz4yn2X6C8"
+};
+</script>
+
+<header class="top">
+  <div class="wrap">
+    <a href="#inicio" class="mark"><i></i>AEFYM · 24 H</a>
+    <nav id="nav" aria-label="Secciones">
+      <a href="#evento">Evento</a>
+      <a href="#tematicas">Temáticas</a>
+      <a href="#importancia">Por qué importa</a>
+      <a href="#programa">Programa</a>
+      <a href="#empresas">Empresas</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <div class="top-r">
+      <span class="clock" aria-hidden="true"><span class="sun"><i id="sun"></i></span><span id="skytime">Jue 13:00</span><b id="skyname">Tarde</b></span>
+      <button class="menu-btn" id="menu" aria-expanded="false" aria-controls="nav">Menú</button>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- PORTADA · jueves 13:00 -->
+<section class="hero" id="inicio" data-sky="jue13">
+  <canvas id="isobaras" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <p class="label">AEFYM · Escuela de Física · Universidad de Costa Rica</p>
+    <h1><span class="ed"><b>21.ª</b> edición</span><span class="big">24 Horas</span><span class="sub">de Física y Meteorología</span></h1>
+    <div class="hero-grid">
+      <div>
+        <p class="lede">Del jueves a la 1 de la tarde al viernes al mediodía, la Escuela de Física se llena de charlas sobre investigación, experiencias académicas y temas de interés en física y meteorología, presentadas por docentes, estudiantes y profesionales.</p>
+        <div class="cta">
+          <a class="btn solid js-form" target="_blank" rel="noopener">Proponer una charla</a>
+          <a href="#programa" class="btn">Ver el programa</a>
+        </div>
+      </div>
+      <div class="station" aria-label="Datos del evento">
+        <div class="hd"><span>Estación UCR · 9.94° N 84.05° O</span><span>1160 m</span></div>
+        <dl>
+          <dt>Fecha</dt><dd data-f="fechaTexto"></dd>
+          <dt>Jueves 10</dt><dd>13:00 – 22:00</dd>
+          <dt>Viernes 11</dt><dd>07:00 – 13:00</dd>
+          <dt>Charlas</dt><dd>50 min + 10 min</dd>
+          <dt>Lugar</dt><dd data-f="lugar"></dd>
+          <dt>Entrada</dt><dd data-f="entrada"></dd>
+          <dt>Faltan</dt><dd id="countdown">—</dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+  <div class="front" aria-hidden="true"><svg id="frontsvg" preserveAspectRatio="none"></svg></div>
+</section>
+
+<!-- SOBRE · jueves 17:45 -->
+<section id="evento" data-sky="jue17">
+  <div class="wrap about">
+    <div>
+      <p class="label">El evento</p>
+      <h2>Veinticuatro horas de ciencia hecha en Costa Rica</h2>
+      <p class="intro">Las 24 Horas de Física y Meteorología son un encuentro que organiza cada año la Asociación de Estudiantes de Física y Meteorología (AEFYM). Esta es su vigésima primera edición.</p>
+      <p class="intro">El programa reúne charlas de 50 minutos sobre trabajos de investigación, trayectorias académicas y temas de interés. Pueden participar docentes, estudiantes y cualquier persona interesada en estas ciencias, tanto en el público como en la tarima.</p>
+    </div>
+    <blockquote class="pull">Veintiún ediciones mostrando que la física y la meteorología están en el pronóstico de mañana, en un hospital, en un chip y en el mar.<span>AEFYM · Escuela de Física, UCR</span></blockquote>
+  </div>
+</section>
+
+<!-- EDICIÓN ANTERIOR · jueves 17:45 -->
+<section id="fotos" data-sky="jue17">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="label">Edición anterior · diciembre 2025</p><h2>Así fue la 20.ª edición</h2></div>
+      <p class="intro">Charlas en el auditorio, una sesión de pósters llena de preguntas y muchas conversaciones en los pasillos.</p>
+    </div>
+    <div class="gal">
+      <figure class="g1"><img src="fotos/globos.jpg" alt="Globos dorados con el número 20 para celebrar la vigésima edición" loading="lazy" style="object-position:60% 40%"><figcaption>20 ediciones</figcaption></figure>
+      <figure class="g2"><img src="fotos/charla.jpg" alt="Un expositor presenta su charla frente a la pantalla del auditorio" loading="lazy"><figcaption>Charlas</figcaption></figure>
+      <figure class="g3"><img src="fotos/auditorio.jpg" alt="Público en el auditorio durante una charla sobre astrofísica" loading="lazy" style="object-position:50% 70%"><figcaption>Auditorio</figcaption></figure>
+      <figure class="g4"><img src="fotos/posters.jpg" alt="Estudiantes recorren la sesión de pósters" loading="lazy"><figcaption>Pósters</figcaption></figure>
+      <figure class="g5"><img src="fotos/conversacion.jpg" alt="Dos estudiantes conversan frente a un póster" loading="lazy"><figcaption>Conversación</figcaption></figure>
+      <figure class="g6"><img src="fotos/pasillo.jpg" alt="Grupo de estudiantes conversando entre pósters" loading="lazy"><figcaption>Comunidad</figcaption></figure>
+      <div class="gtext"><strong>Este año va la número 21</strong><p>Proponga su charla y forme parte de la próxima edición.</p><a class="btn solid js-form" target="_blank" rel="noopener" style="align-self:flex-start">Proponer una charla</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- TEMÁTICAS · jueves 21:00 -->
+<section id="tematicas" data-sky="jue21">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="label">Temáticas</p><h2>Cuatro ejes del encuentro</h2></div>
+      <p class="intro">Las charlas se agrupan en cuatro ejes. Seleccione uno para ver qué incluye.</p>
+    </div>
+    <div class="legend" role="tablist" aria-label="Temáticas">
+      <button class="th" role="tab" id="th1" aria-controls="tp1" aria-selected="true">
+        <svg viewBox="0 0 120 28" aria-hidden="true"><circle cx="14" cy="14" r="10" fill="none" stroke="var(--front)" stroke-width="2"/><circle cx="14" cy="14" r="3" fill="var(--front)"/><line x1="28" y1="14" x2="120" y2="14" stroke="var(--rule)" stroke-width="1"/></svg>
+        <h3>Investigación</h3><p class="k">Descubrimientos y trabajos científicos</p>
+        <p>Los centros de la UCR donde se investiga física y meteorología.</p>
+      </button>
+      <button class="th" role="tab" id="th2" aria-controls="tp2" aria-selected="false">
+        <svg viewBox="0 0 120 28" aria-hidden="true"><circle cx="10" cy="14" r="5" fill="var(--front)"/><circle cx="34" cy="14" r="5" fill="var(--front)"/><circle cx="58" cy="14" r="5" fill="var(--front)"/><path d="M15 14h14M39 14h14" stroke="var(--front)" stroke-width="2"/><line x1="68" y1="14" x2="120" y2="14" stroke="var(--rule)" stroke-width="1"/></svg>
+        <h3>Comunidad</h3><p class="k">Estudiantes y profesionales</p>
+        <p>Clubes, olimpiadas y espacios para crecer dentro y fuera del aula.</p>
+      </button>
+      <button class="th" role="tab" id="th3" aria-controls="tp3" aria-selected="false">
+        <svg viewBox="0 0 120 28" aria-hidden="true"><path d="M2 20 C 20 4, 40 4, 58 14 S 96 24, 118 8" fill="none" stroke="var(--front)" stroke-width="2"/></svg>
+        <h3>Meteorología</h3><p class="k">Ciencia de la atmósfera</p>
+        <p>Atmósfera, clima y océano: qué estudia cada área.</p>
+      </button>
+      <button class="th" role="tab" id="th4" aria-controls="tp4" aria-selected="false">
+        <svg viewBox="0 0 120 28" aria-hidden="true"><path d="M2 14 Q 9 2 16 14 T 30 14 T 44 14 T 58 14 T 72 14" fill="none" stroke="var(--front)" stroke-width="2"/><line x1="78" y1="14" x2="120" y2="14" stroke="var(--rule)" stroke-width="1"/></svg>
+        <h3>Física</h3><p class="k">Conocimiento e innovación</p>
+        <p>Las áreas de la física y qué estudia cada una.</p>
+      </button>
+    </div>
+
+    <div class="tpanel" id="tp1" role="tabpanel" aria-labelledby="th1">
+      <p class="tlead">Docentes y estudiantes de la Escuela investigan en estos centros de la Universidad de Costa Rica.</p>
+      <ul class="centers">
+        <li><span class="sig">CIGEFI</span><div><p><strong>Centro de Investigaciones Geofísicas.</strong> Atmósfera, clima y otros fenómenos geofísicos.</p><span class="tag">Física de la atmósfera · Clima · Pronóstico · Hidrometeorología</span></div></li>
+        <li><span class="sig">CICANUM</span><div><p><strong>Centro de Investigación en Ciencias Atómicas, Nucleares y Moleculares.</strong> Radiaciones y sus aplicaciones.</p><span class="tag">Física nuclear · Física médica</span></div></li>
+        <li><span class="sig">CICIMA</span><div><p><strong>Centro de Investigación en Ciencia e Ingeniería de Materiales.</strong> Desarrollo y caracterización de materiales.</p><span class="tag">Ciencia de materiales</span></div></li>
+        <li><span class="sig">CINESPA</span><div><p><strong>Centro de Investigación Espacial.</strong> Física espacial, astronomía y ciencias del espacio.</p><span class="tag">Astrofísica · Física espacial</span></div></li>
+        <li><span class="sig">CIMAR</span><div><p><strong>Centro de Investigación en Ciencias del Mar y Limnología.</strong> Su <a href="https://miocimar.ucr.ac.cr/sobre-el-mio" target="_blank" rel="noopener">Módulo de Información Oceanográfica (MIO)</a> pronostica oleaje, viento y mareas en las costas del país.</p><span class="tag">Oceanografía física</span></div></li>
+      </ul>
+    </div>
+
+    <div class="tpanel" id="tp2" role="tabpanel" aria-labelledby="th2" hidden>
+      <p class="tlead">La AEFYM organiza clubes donde el estudiantado desarrolla habilidades blandas y herramientas profesionales.</p>
+      <div class="clubs">
+        <div><h3>Programación</h3><p>Python y herramientas científicas para analizar datos, simular y automatizar.</p></div>
+        <div><h3>Currículum y perfil profesional</h3><p>Cómo presentar su experiencia para becas, posgrados y empleos.</p></div>
+        <div><h3>Olimpiadas de Física</h3><p>Preparación y acompañamiento para competencias nacionales e internacionales.</p></div>
+        <div><h3>Habilidades blandas</h3><p>Comunicación, trabajo en equipo y presentación de resultados en público.</p></div>
+      </div>
+    </div>
+
+    <div class="tpanel" id="tp3" role="tabpanel" aria-labelledby="th3" hidden>
+      <p class="tlead">Áreas de la meteorología y las ciencias del océano.</p>
+      <div class="areas">
+        <div class="area"><h3>Física de la atmósfera</h3><p>Radiación, nubes, lluvia y los procesos físicos que ocurren en la atmósfera.</p><span class="tag">CIGEFI</span></div>
+        <div class="area"><h3>Pronóstico del tiempo</h3><p>Frentes, ondas tropicales y ciclones: cómo se comportan y cómo se pronostican.</p><span class="tag">CIGEFI</span></div>
+        <div class="area"><h3>Clima y cambio climático</h3><p>Comportamiento del clima a largo plazo, su variabilidad, como El Niño, y sus cambios.</p><span class="tag">CIGEFI</span></div>
+        <div class="area"><h3>Oceanografía física</h3><p>Corrientes, oleaje, mareas y la interacción entre el océano y la atmósfera.</p><span class="tag">CIMAR · MIO</span></div>
+        <div class="area"><h3>Hidrometeorología</h3><p>Relación entre la lluvia, los ríos y el agua disponible, clave para la gestión de riesgo y la energía.</p><span class="tag">CIGEFI</span></div>
+        <div class="area"><h3>Ciencia de datos</h3><p>Estadística, programación y aprendizaje automático aplicados a datos de estaciones, satélites y modelos.</p></div>
+      </div>
+    </div>
+
+    <div class="tpanel" id="tp4" role="tabpanel" aria-labelledby="th4" hidden>
+      <p class="tlead">Áreas de la física que se trabajan en la Escuela y sus centros.</p>
+      <div class="areas">
+        <div class="area"><h3>Ciencia de materiales</h3><p>Propiedades de sólidos, semiconductores y materiales nuevos, desde su estructura atómica hasta sus aplicaciones.</p><span class="tag">CICIMA</span></div>
+        <div class="area"><h3>Física nuclear y médica</h3><p>Radiación y técnicas nucleares aplicadas a la salud, el diagnóstico por imágenes y la protección radiológica.</p><span class="tag">CICANUM</span></div>
+        <div class="area"><h3>Altas energías y partículas</h3><p>Partículas fundamentales y sus interacciones, con datos de grandes colaboraciones internacionales.</p></div>
+        <div class="area"><h3>Física teórica</h3><p>Modelos matemáticos que describen la naturaleza, de la mecánica cuántica a la gravitación.</p></div>
+        <div class="area"><h3>Óptica</h3><p>Comportamiento de la luz y su uso en láseres, sensores, imágenes y comunicaciones.</p></div>
+        <div class="area"><h3>Biofísica</h3><p>Física aplicada a sistemas vivos: proteínas, células y procesos biológicos.</p></div>
+        <div class="area"><h3>Astrofísica</h3><p>Estrellas, galaxias y fenómenos del espacio a partir de observaciones y modelos.</p><span class="tag">CINESPA</span></div>
+        <div class="area"><h3>Cosmología</h3><p>Origen, estructura y evolución del universo a gran escala.</p></div>
+        <div class="area"><h3>Física computacional</h3><p>Simulaciones y métodos numéricos para problemas que no se pueden resolver a mano.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IMPORTANCIA · viernes 05:45 -->
+<section id="importancia" data-sky="vie05">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="label">Por qué importa</p><h2>Más presentes de lo que parece</h2></div>
+      <p class="intro">La física y la meteorología sostienen tecnologías, decisiones y empleos muy concretos. Seleccione un tema.</p>
+    </div>
+    <div class="tabs" role="tablist" aria-label="Temas">
+      <button class="tab" role="tab" id="t1" aria-controls="p1" aria-selected="true">Física y sociedad</button>
+      <button class="tab" role="tab" id="t2" aria-controls="p2" aria-selected="false">Meteorología y sociedad</button>
+      <button class="tab" role="tab" id="t3" aria-controls="p3" aria-selected="false">Mercado laboral</button>
+    </div>
+    <div class="panel" id="p1" role="tabpanel" aria-labelledby="t1">
+      <div><p class="lead">Casi toda la tecnología que usamos empezó como una pregunta de física.</p>
+        <p class="note"><b>Mito frecuente</b>Que la física solo sirve para dar clases o estudiar el universo. La carrera enseña a modelar, programar y resolver problemas complejos, habilidades que buscan muchas industrias.</p></div>
+      <div class="uses">
+        <div><h4>El teléfono celular</h4><p>Chips, pantallas y baterías salen de la física de semiconductores y de materiales.</p></div>
+        <div><h4>GPS</h4><p>Sin las correcciones de la relatividad, la ubicación en el mapa se desviaría kilómetros cada día.</p></div>
+        <div><h4>Salud</h4><p>Rayos X, resonancia magnética y radioterapia son física médica que se usa a diario en los hospitales.</p></div>
+        <div><h4>Energía</h4><p>Hidroeléctricas, geotermia y paneles solares, la base de la electricidad renovable de Costa Rica.</p></div>
+        <div><h4>Internet</h4><p>La fibra óptica transmite datos con luz. La óptica y los láseres hacen posible cada videollamada.</p></div>
+        <div><h4>Sismos y volcanes</h4><p>La geofísica ayuda a entender y vigilar los fenómenos que más afectan al país.</p></div>
+      </div>
+    </div>
+    <div class="panel" id="p2" role="tabpanel" aria-labelledby="t2" hidden>
+      <div><p class="lead">En un país tropical con dos vertientes, la atmósfera define buena parte del día.</p>
+        <p class="note"><b>Dato</b>Un pronóstico combina física, matemáticas, observaciones de estaciones y satélites, y modelos que corren en supercomputadoras.</p></div>
+      <div class="uses">
+        <div><h4>Agricultura</h4><p>Saber cuándo llueve define cuándo sembrar, cosechar o regar café, piña o arroz.</p></div>
+        <div><h4>Gestión de riesgo</h4><p>Pronosticar lluvias intensas y ciclones permite emitir alertas a tiempo.</p></div>
+        <div><h4>Aviación y navegación</h4><p>Cada vuelo y cada salida al mar dependen de información meteorológica y oceanográfica.</p></div>
+        <div><h4>Agua y energía</h4><p>Las lluvias llenan los embalses que generan buena parte de la electricidad.</p></div>
+        <div><h4>Cambio climático</h4><p>Entender el clima ayuda a prepararse para sequías, El Niño y eventos extremos.</p></div>
+        <div><h4>Salud y turismo</h4><p>Calor extremo, calidad del aire y radiación UV afectan a las personas y a la economía.</p></div>
+      </div>
+    </div>
+    <div class="panel" id="p3" role="tabpanel" aria-labelledby="t3" hidden>
+      <div><p class="lead">¿Dónde trabaja una persona graduada en física o meteorología?</p>
+        <p class="note"><b>Lo que más se valora</b>Plantear bien un problema, analizar datos y comunicar resultados.</p></div>
+      <div class="uses">
+        <div><h4>Investigación y docencia</h4><p>Universidades, centros de investigación y colaboraciones internacionales.</p></div>
+        <div><h4>Ciencia de datos</h4><p>Análisis, modelado y programación en tecnología, banca, seguros y consultoría.</p></div>
+        <div><h4>Industria</h4><p>Semiconductores, dispositivos médicos, óptica, instrumentación y control de calidad.</p></div>
+        <div><h4>Física médica</h4><p>Radioterapia, protección radiológica e imágenes médicas en hospitales.</p></div>
+        <div><h4>Servicios meteorológicos</h4><p>Pronóstico, climatología y alertas en instituciones públicas y empresas.</p></div>
+        <div><h4>Energía y ambiente</h4><p>Energías renovables, eficiencia energética, evaluación ambiental y política climática.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAMA · viernes 09:00 -->
+<section id="programa" data-sky="vie09">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="label">Programa</p><h2>Jueves 13:00 a viernes 13:00</h2></div>
+      <p class="intro">Cada charla dura 50 minutos. Entre una y otra hay 10 minutos para que la siguiente persona prepare su presentación. Los títulos y ponentes se publicarán al cerrar la convocatoria.</p>
+    </div>
+    <div class="days">
+      <div class="day">
+        <h3>Jueves 10 <span>DIC · 13:00 – 22:00</span></h3>
+        <ol>
+          <li><time>13:00</time><span>Charla</span></li>
+          <li><time>14:00</time><span>Charla</span></li>
+          <li><time>15:00</time><span>Charla</span></li>
+          <li class="tbd"><time>16:00</time><span>Receso</span></li>
+          <li><time>17:00</time><span>Charla</span></li>
+          <li><time>18:00</time><span>Charla</span></li>
+          <li class="tbd"><time>19:00</time><span>Cena y tiempo libre</span></li>
+          <li><time>21:00</time><span>Charla</span></li>
+        </ol>
+      </div>
+      <div class="day">
+        <h3>Viernes 11 <span>DIC · 07:00 – 13:00</span></h3>
+        <ol>
+          <li><time>07:00</time><span>Charla</span></li>
+          <li class="tbd"><time>08:00</time><span>Desayuno y tiempo libre</span></li>
+          <li><time>09:00</time><span>Charla</span></li>
+          <li><time>10:00</time><span>Charla</span></li>
+          <li><time>11:00</time><span>Charla</span></li>
+          <li><time>12:00</time><span>Charla</span><em>Cierre</em></li>
+        </ol>
+      </div>
+    </div>
+    <div class="prog-note">
+      <p><strong>Convocatoria abierta.</strong> Docentes, estudiantes y otras personas interesadas pueden proponer una charla sobre su investigación, su experiencia académica o un tema de interés.</p>
+      <a class="btn solid js-form" target="_blank" rel="noopener">Proponer una charla</a>
+    </div>
+  </div>
+</section>
+
+<!-- EMPRESAS · viernes 12:00 -->
+<section id="empresas" data-sky="vie12">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="label">Empresas e instituciones</p><h2>Participe en las 24 Horas</h2></div>
+      <p class="intro">El público del evento son estudiantes de Física y de Meteorología de la UCR, docentes e investigadores. Su organización puede acercarse a ellos de varias formas.</p>
+    </div>
+    <div class="biz">
+      <div><h3>Dar una charla</h3><p>Cuente qué hace su equipo y qué problemas resuelve con física, meteorología o análisis de datos.</p></div>
+      <div><h3>Patrocinar</h3><p>Apoye con refrigerios, materiales o reconocimientos para ponentes y participantes.</p></div>
+      <div><h3>Conocer talento</h3><p>Converse con estudiantes que programan, modelan, analizan datos y trabajan con instrumentación.</p></div>
+      <div><h3>Abrir colaboraciones</h3><p>Prácticas, trabajos finales de graduación o proyectos conjuntos con la Escuela.</p></div>
+    </div>
+    <div class="biz-cta">
+      <a class="btn solid" id="biz-mail">Escribir a la AEFYM</a>
+      <span class="label" data-f="correo"></span>
+    </div>
+  </div>
+</section>
+
+<!-- ORGANIZAN -->
+<section id="organizan" data-sky="vie12" style="padding-block:56px">
+  <div class="wrap">
+    <p class="label" style="margin-bottom:18px">Organizan</p>
+    <div class="orgs">
+      <div class="org"><div class="logo"><img src="logos/aefym.png" alt="AEFYM" onerror="this.outerHTML='<span class=ph>AEFYM</span>'"></div><span>Asociación de Estudiantes de Física y Meteorología</span></div>
+      <div class="org"><div class="logo"><img src="logos/escuela.png" alt="Escuela de Física" onerror="this.outerHTML='<span class=ph>Escuela de Física</span>'"></div><span>Escuela de Física</span></div>
+      <div class="org"><div class="logo"><img src="logos/ucr.png" alt="UCR" onerror="this.outerHTML='<span class=ph>UCR</span>'"></div><span>Universidad de Costa Rica</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto" data-sky="vie12">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="label">Contacto</p><h2>Escríbanos</h2></div>
+      <p class="intro">Para proponer una charla, colaborar con la organización o hacer cualquier consulta.</p>
+    </div>
+    <div class="contact">
+      <div class="lines">
+        <div class="line"><span class="label">Correo</span><span class="v"><a id="c-mail" data-f="correo"></a></span><button class="copy" data-copy="correo">Copiar</button></div>
+        <div class="line"><span class="label">Instagram</span><span class="v"><a id="c-ig" target="_blank" rel="noopener">@<span data-f="instagram"></span></a></span><button class="copy" data-copy="instagram">Copiar</button></div>
+        <div class="line" id="row-tel"><span class="label">Presidencia<br>WhatsApp</span><span class="v"><a id="c-tel" target="_blank" rel="noopener" data-f="telefono"></a></span><button class="copy" data-copy="telefono">Copiar</button></div>
+      </div>
+      <div class="qr">
+        <div id="qr"></div>
+        <strong>Proponga su charla</strong>
+        <p>Escanee el código para abrir el formulario de la convocatoria.</p>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap label">
+    <span>© <span id="yr"></span> AEFYM · Escuela de Física · Universidad de Costa Rica</span>
+    <span>San Pedro de Montes de Oca · 9.94° N 84.05° O</span>
+  </div>
+</footer>
+
+<script>
+// Datos
+document.querySelectorAll('[data-f]').forEach(el=>{el.textContent=EVENTO[el.dataset.f]??''});
+document.getElementById('yr').textContent=new Date().getFullYear();
+document.querySelectorAll('.js-form').forEach(a=>a.href=EVENTO.formulario);
+document.getElementById('c-mail').href='mailto:'+EVENTO.correo;
+document.getElementById('biz-mail').href='mailto:'+EVENTO.correo+'?subject='+encodeURIComponent('Participación en las 24 Horas de Física y Meteorología');
+document.getElementById('c-ig').href='https://instagram.com/'+EVENTO.instagram;
+if(EVENTO.telefono){document.getElementById('c-tel').href='https://wa.me/'+EVENTO.telefono.replace(/\D/g,'')}
+else{document.getElementById('row-tel').remove()}
+
+// Menú en pantallas pequeñas
+const nav=document.getElementById('nav'),menu=document.getElementById('menu');
+menu.addEventListener('click',()=>{const o=nav.classList.toggle('open');menu.setAttribute('aria-expanded',o)});
+nav.addEventListener('click',e=>{if(e.target.tagName==='A'){nav.classList.remove('open');menu.setAttribute('aria-expanded',false)}});
+
+// Copiar
+document.querySelectorAll('.copy').forEach(b=>b.addEventListener('click',async()=>{
+  const v=b.dataset.copy==='instagram'?'@'+EVENTO.instagram:EVENTO[b.dataset.copy];
+  try{await navigator.clipboard.writeText(v);b.textContent='Copiado'}catch(e){b.textContent='Seleccione'}
+  setTimeout(()=>b.textContent='Copiar',1600);
+}));
+
+// QR al formulario
+try{new QRCode(document.getElementById('qr'),{text:EVENTO.formulario,width:336,height:336,colorDark:'#0f1d2b',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M})}
+catch(e){document.getElementById('qr').textContent=EVENTO.formulario}
+
+// Cuenta regresiva
+(()=>{const el=document.getElementById('countdown'),t0=new Date(EVENTO.inicioISO).getTime(),t1=new Date(EVENTO.finISO).getTime();
+function tick(){const now=Date.now();let d=t0-now;
+  if(d<=0){el.textContent=now<t1?'En curso':'Finalizado';return}
+  const D=Math.floor(d/864e5),H=Math.floor(d%864e5/36e5),M=Math.floor(d%36e5/6e4);
+  el.textContent=`${D} d ${String(H).padStart(2,'0')} h ${String(M).padStart(2,'0')} min`}
+tick();setInterval(tick,30000)})();
+
+// Pestañas (temáticas y "por qué importa")
+function tabset(sel){
+  const tabs=[...document.querySelectorAll(sel)];
+  function select(i,focus){tabs.forEach((b,j)=>{b.setAttribute('aria-selected',i===j);b.tabIndex=i===j?0:-1;document.getElementById(b.getAttribute('aria-controls')).hidden=i!==j});if(focus)tabs[i].focus()}
+  tabs.forEach((b,i)=>{b.addEventListener('click',()=>select(i));
+    b.addEventListener('keydown',e=>{if(e.key==='ArrowRight')select((i+1)%tabs.length,true);if(e.key==='ArrowLeft')select((i+tabs.length-1)%tabs.length,true)})});
+  select(0);
+}
+tabset('.legend .th');tabset('.tab');
+
+// Enlaces directos a cada temática (los usa el afiche): #investigacion, #comunidad, #meteorologia, #fisica
+const TEMAS={investigacion:0,comunidad:1,meteorologia:2,fisica:3};
+function abrirTema(){const k=decodeURIComponent(location.hash.slice(1)).normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
+  if(k in TEMAS){document.querySelectorAll('.legend .th')[TEMAS[k]].click();
+    requestAnimationFrame(()=>document.getElementById('tematicas').scrollIntoView({behavior:'instant'}))}}
+addEventListener('hashchange',abrirTema);abrirTema();
+
+// El cielo sigue las 24 horas del evento
+const SKIES={
+  jue13:{h:"Jue 13:00",n:"Tarde",    sun:1, paper:"#1d74bd",ink:"#ffffff",ink2:"#d4e7f7",rule:"#4b93cf",iso:"#bfe6ff",front:"#ffd166",chip:"#2c84cc"},
+  jue17:{h:"Jue 17:45",n:"Atardecer",sun:9, paper:"#e66f4e",ink:"#200e08",ink2:"#56261a",rule:"#c75a3d",iso:"#3a1b55",front:"#3a1b55",chip:"#d9603f"},
+  jue21:{h:"Jue 21:00",n:"Noche",    sun:16,paper:"#0a1220",ink:"#e9eff6",ink2:"#93a5b9",rule:"#1e2c3e",iso:"#6cc0f0",front:"#ff8a65",chip:"#16233a"},
+  vie05:{h:"Vie 05:45",n:"Amanecer", sun:9, paper:"#f4d3c6",ink:"#2a1621",ink2:"#6e4752",rule:"#dcae9f",iso:"#a8436a",front:"#b23a2a",chip:"#ebc0b1"},
+  vie09:{h:"Vie 09:00",n:"Mañana",   sun:4, paper:"#cfe6f6",ink:"#0d2236",ink2:"#3d5a73",rule:"#a6c8e0",iso:"#1767a8",front:"#c03a22",chip:"#b8d9ef"},
+  vie12:{h:"Vie 12:00",n:"Mediodía", sun:1, paper:"#1d74bd",ink:"#ffffff",ink2:"#d4e7f7",rule:"#4b93cf",iso:"#bfe6ff",front:"#ffd166",chip:"#2c84cc"}
+};
+let skyNow='jue13';
+const sun=document.getElementById('sun');sun.style.top=SKIES.jue13.sun+'px';
+function setSky(k){
+  if(k===skyNow||!SKIES[k])return;skyNow=k;const s=SKIES[k],r=document.documentElement.style;
+  [['--paper','paper'],['--ink','ink'],['--ink-2','ink2'],['--rule','rule'],['--iso','iso'],['--front','front'],['--chip','chip']].forEach(([v,p])=>r.setProperty(v,s[p]));
+  r.colorScheme=/^#[01]/.test(s.paper)?'dark':'light';
+  document.getElementById('skytime').textContent=s.h;document.getElementById('skyname').textContent=s.n;sun.style.top=s.sun+'px';
+}
+const skyIO=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)setSky(e.target.dataset.sky)}),{rootMargin:'-45% 0px -55% 0px'});
+document.querySelectorAll('[data-sky]').forEach(s=>skyIO.observe(s));
+
+// Línea de frente: triángulos (frente frío) y semicírculos (frente cálido)
+(()=>{const svg=document.getElementById('frontsvg');
+function draw(){const w=svg.clientWidth,h=22;let s='',x=12;
+  while(x<w-12){s+= x>w*0.55?`<path d="M${x-8} ${h} A8 8 0 0 1 ${x+8} ${h}Z" style="fill:var(--front)"/>`:`<path d="M${x-8} ${h} L${x} ${h-12} L${x+8} ${h}Z" style="fill:var(--iso)"/>`;x+=40}
+  svg.setAttribute('viewBox',`0 0 ${w} ${h}`);svg.innerHTML=s}
+draw();addEventListener('resize',draw)})();
+
+// Isobaras y viento: el viento corre paralelo a las isobaras y gira
+// en sentido antihorario alrededor de la baja (B), como en el hemisferio norte.
+(()=>{
+  const c=document.getElementById('isobaras'),x=c.getContext('2d');
+  const still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let W,H,dpr,t=0,running=false,parts=[];
+  function size(){dpr=Math.min(devicePixelRatio||1,2);W=c.clientWidth;H=c.clientHeight;c.width=W*dpr;c.height=H*dpr;x.setTransform(dpr,0,0,dpr,0,0);
+    parts=Array.from({length:Math.round(Math.min(160,W*H/7000))},spawn)}
+  function spawn(){return{x:Math.random()*W,y:Math.random()*H,age:Math.random()*200,trail:[]}}
+  function centers(){const R=Math.max(W,H),narrow=W<900;return[
+    {x:W*(narrow?0.92:0.80)+Math.sin(t*0.7)*W*0.025,y:H*(narrow?0.10:0.32)+Math.cos(t*0.5)*H*0.03,a:-16-2*Math.sin(t*0.9),r:R*(narrow?0.20:0.22),k:'B'},
+    {x:W*0.28+Math.cos(t*0.4)*W*0.03,y:H*0.96,a:12+1.5*Math.cos(t*0.8),r:R*0.30,k:'A'},
+    {x:W*1.05,y:H*0.95,a:6,r:R*0.18,k:null}]}
+  function P(px,py,cs){let p=1012;for(const s of cs){const dx=px-s.x,dy=py-s.y;p+=s.a*Math.exp(-(dx*dx+dy*dy)/(2*s.r*s.r))}return p}
+  function frame(){
+    const cs=centers(),st=getComputedStyle(document.documentElement),col=st.getPropertyValue('--iso').trim(),ink=st.getPropertyValue('--ink-2').trim(),fr=st.getPropertyValue('--front').trim();
+    x.clearRect(0,0,W,H);
+    const g=14,nx=Math.ceil(W/g)+1,ny=Math.ceil(H/g)+1,v=new Float32Array(nx*ny);
+    for(let j=0;j<ny;j++)for(let i=0;i<nx;i++)v[j*nx+i]=P(i*g,j*g,cs);
+    x.lineWidth=1.1;x.strokeStyle=col;x.globalAlpha=.42;
+    const labelCol=Math.round(nx*(W<900?0.80:0.62)),labels=[];
+    for(let L=996;L<=1026;L+=2){
+      x.beginPath();
+      for(let j=0;j<ny-1;j++)for(let i=0;i<nx-1;i++){
+        const a=v[j*nx+i],b=v[j*nx+i+1],cc=v[(j+1)*nx+i+1],d=v[(j+1)*nx+i],X=i*g,Y=j*g,pts=[];
+        if((a<L)!==(b<L))pts.push([X+g*(L-a)/(b-a),Y]);
+        if((b<L)!==(cc<L))pts.push([X+g,Y+g*(L-b)/(cc-b)]);
+        if((d<L)!==(cc<L))pts.push([X+g*(L-d)/(cc-d),Y+g]);
+        if((a<L)!==(d<L))pts.push([X,Y+g*(L-a)/(d-a)]);
+        if(pts.length>=2){x.moveTo(pts[0][0],pts[0][1]);x.lineTo(pts[1][0],pts[1][1]);
+          if(pts.length===4){x.moveTo(pts[2][0],pts[2][1]);x.lineTo(pts[3][0],pts[3][1])}}
+      }
+      x.stroke();
+      for(let j=0;j<ny-1;j++){const a=v[j*nx+labelCol],d=v[(j+1)*nx+labelCol];if((a<L)!==(d<L)){labels.push([labelCol*g,j*g+g*(L-a)/(d-a),L]);break}}
+    }
+    // viento geostrófico
+    if(!still){
+      x.globalAlpha=1;x.lineWidth=1.3;
+      for(const p of parts){
+        const e=3,dPx=(P(p.x+e,p.y,cs)-P(p.x-e,p.y,cs))/(2*e),dPy=(P(p.x,p.y+e,cs)-P(p.x,p.y-e,cs))/(2*e);
+        let u=dPy,w=-dPx;const m=Math.hypot(u,w)||1,sp=Math.min(2.4,Math.max(.35,m*70));
+        p.x+=u/m*sp;p.y+=w/m*sp;p.age++;p.trail.push([p.x,p.y]);if(p.trail.length>14)p.trail.shift();
+        if(p.age>240||p.x<-10||p.x>W+10||p.y<-10||p.y>H+10){Object.assign(p,spawn(),{age:0,trail:[]});continue}
+        if(p.trail.length<2)continue;
+        x.beginPath();x.moveTo(p.trail[0][0],p.trail[0][1]);for(const q of p.trail)x.lineTo(q[0],q[1]);
+        x.strokeStyle=col;x.globalAlpha=Math.min(1,p.age/30)*Math.min(1,(240-p.age)/30)*.75;x.stroke();
+      }
+    }
+    x.globalAlpha=.8;x.fillStyle=ink;x.font='500 10px "IBM Plex Mono", monospace';
+    if(W>=700)labels.forEach(([lx,ly,L])=>x.fillText(L,lx+4,ly-3));
+    x.globalAlpha=.95;
+    cs.forEach(s=>{if(!s.k||s.x>W-10||s.y>H-10)return;
+      x.font='800 30px "Archivo", sans-serif';x.fillStyle=s.k==='B'?fr:col;x.fillText(s.k,s.x-10,s.y+10);
+      x.font='500 11px "IBM Plex Mono", monospace';x.fillStyle=ink;x.fillText(Math.round(P(s.x,s.y,cs)),s.x-14,s.y+28)});
+    x.globalAlpha=1;
+  }
+  function loop(){if(!running)return;t+=0.004;frame();requestAnimationFrame(loop)}
+  size();frame();
+  addEventListener('resize',()=>{size();frame()});
+  document.fonts&&document.fonts.ready.then(frame);
+  if(!still)new IntersectionObserver(([e])=>{const was=running;running=e.isIntersecting;if(running&&!was)requestAnimationFrame(loop)}).observe(c);
+})();
+</script>
+</body>
+</html>
