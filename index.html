@@ -215,7 +215,11 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .day time{font:500 .88rem var(--mono);font-variant-numeric:tabular-nums}
 .day li.tbd{color:var(--ink-2)}
 .day li.tbd time{color:var(--ink-2)}
-.day li em{font-style:normal;font:500 .72rem var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--ink-2);margin-left:8px}
+.day li em{font-style:normal;font:500 .72rem var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--ink-2);grid-column:2}
+.day .t{font-weight:600;line-height:1.35}
+.day .who{font-size:.92rem;color:var(--ink-2);margin-top:2px}
+.day li.tbd .t{font-weight:400}
+.day .par{margin-top:18px;border:1.5px solid var(--ink);padding:14px 16px;display:flex;flex-direction:column;gap:4px}
 .prog-note{margin-top:32px;display:flex;flex-wrap:wrap;gap:16px 32px;align-items:center;justify-content:space-between;border:1.5px solid var(--ink);padding:20px 22px}
 .prog-note p{max-width:62ch}
 @media (max-width:820px){.days{grid-template-columns:1fr}}
@@ -499,32 +503,33 @@ const EVENTO = {
   <div class="wrap">
     <div class="sec-head">
       <div><p class="label">Programa</p><h2>Jueves 13:00 a viernes 13:00</h2></div>
-      <p class="intro">Cada charla dura 50 minutos. Entre una y otra hay 10 minutos para que la siguiente persona prepare su presentación. Los títulos y ponentes se publicarán al cerrar la convocatoria.</p>
+      <p class="intro">Cada charla dura 50 minutos. Entre una y otra hay 10 minutos para que la siguiente persona prepare su presentación. El programa puede tener cambios.</p>
     </div>
     <div class="days">
       <div class="day">
         <h3>Jueves 10 <span>DIC · 13:00 – 22:00</span></h3>
         <ol>
-          <li><time>13:00</time><span>Charla</span></li>
-          <li><time>14:00</time><span>Charla</span></li>
-          <li><time>15:00</time><span>Charla</span></li>
-          <li class="tbd"><time>16:00</time><span>Receso</span></li>
-          <li><time>17:00</time><span>Charla</span></li>
-          <li><time>18:00</time><span>Charla</span></li>
-          <li class="tbd"><time>19:00</time><span>Cena y tiempo libre</span></li>
-          <li><time>21:00</time><span>Charla</span></li>
+          <li><time>13:00</time><div><p class="t">El Nobel de Física 2026: Halzen, neutrinos y una nueva ventana al universo</p><p class="who">Dra. Vanessa López Barquero</p></div></li>
+          <li><time>14:00</time><div><p class="t">Láseres de fibra ultrarrápidos: diseño y aplicaciones</p><p class="who">Taina Ramírez Cortés</p></div></li>
+          <li><time>15:00</time><div><p class="t">El Sol y sus ciclos</p><p class="who">Heidy Gutiérrez</p></div></li>
+          <li class="tbd"><time>16:00</time><div><p class="t">Receso</p></div></li>
+          <li><time>17:00</time><div><p class="t">Tu formación en física es un superpoder. Aprende a usarlo</p><p class="who">David Granados González</p></div></li>
+          <li><time>18:00</time><div><p class="t">Currículum y entrevistas para la industria tecnológica</p><p class="who">Optics Chapter UCR</p></div></li>
+          <li class="tbd"><time>19:00</time><div><p class="t">Cena y tiempo libre</p></div></li>
+          <li><time>21:00</time><div><p class="t">Temperatura superficial del mar en el Pacífico y el Caribe de Costa Rica</p><p class="who">Óscar Álvarez Poveda</p></div></li>
         </ol>
       </div>
       <div class="day">
         <h3>Viernes 11 <span>DIC · 07:00 – 13:00</span></h3>
         <ol>
-          <li><time>07:00</time><span>Charla</span></li>
-          <li class="tbd"><time>08:00</time><span>Desayuno y tiempo libre</span></li>
-          <li><time>09:00</time><span>Charla</span></li>
-          <li><time>10:00</time><span>Charla</span></li>
-          <li><time>11:00</time><span>Charla</span></li>
-          <li><time>12:00</time><span>Charla</span><em>Cierre</em></li>
+          <li><time>07:00</time><div><p class="t">Predicción de eclipses por medio de machine learning</p><p class="who">Andrew Vargas</p></div></li>
+          <li class="tbd"><time>08:00</time><div><p class="t">Desayuno y tiempo libre</p></div></li>
+          <li><time>09:00</time><div><p class="t">Predicción de eclipses solares mediante métodos geométricos</p><p class="who">Oscar Güell Zavaleta</p></div></li>
+          <li><time>10:00</time><div><p class="t">Inteligencia artificial: una mirada desde la física teórica y el fin del universo</p><p class="who">Hugo Solís</p></div></li>
+          <li><time>11:00</time><div><p class="t">¿Qué es una teoría de Yang–Mills? El nacimiento del lenguaje del Modelo Estándar</p><p class="who">Sebastián Venegas Marchena</p></div></li>
+          <li><time>12:00</time><div><p class="t">El Universo y la termodinámica cuántica: más por menos</p><p class="who">Alejandro Jenkins</p></div><em>Cierre</em></li>
         </ol>
+        <div class="par"><span class="label">En paralelo · 09:00 – 12:00</span><p class="t">Feria de proyectos estudiantiles</p><p class="who">Coordina Alexander Sancho Dive</p></div>
       </div>
     </div>
     <div class="prog-note">
